@@ -76,11 +76,12 @@ export default function Home() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fotos`, {
         method: 'POST',
         body: formData,
-        headers: {
-          'Accept': 'application/json'
-        },
         mode: 'cors'
       });
+
+      if (response.status === 413) {
+        throw new Error('Arquivo muito grande. O tamanho máximo permitido é 100MB por foto.');
+      }
 
       const data = await response.json();
       

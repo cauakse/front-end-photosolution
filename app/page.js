@@ -37,7 +37,12 @@ export default function Home() {
 
   const checkExistingPhotos = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/existe`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/existe`, {
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
       const data = await response.json();
       setHasPhotos(response.status === 200);
     } catch (error) {
@@ -70,7 +75,11 @@ export default function Home() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fotos`, {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        },
+        mode: 'cors'
       });
 
       const data = await response.json();
@@ -93,7 +102,12 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fotos`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fotos`, {
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.error || 'Erro ao baixar fotos');
